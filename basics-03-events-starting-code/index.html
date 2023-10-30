@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <!-- v-on에는 click, mouseover 등 JavaScript 기본 이벤트를 전달할 수 있다 -->
+      <!-- html에 간단한 JavaScript 로직 등을 담을 수는 있지만,
+          웬만하면 html은 간결한 코드로 출력에 집중해야 하기 때문에 js단에서 처리하는 것이 좋다. -->
+      <!-- <button v-on:click="counter++">Add</button>
+      <button v-on:click="counter--">Remove</button> -->
+
+      <!-- Vue에서는 명시적으로 호출하든 가리키기만 하든 상관 없다 -->
+      <button v-on:click="add()">Add 1</button>
+      <button v-on:click="reduce">Remove 1</button>
+
+      <!-- methods 함수에 매개변수 전달하기 -->
+      <!-- 전적으로 html단을 만지는 개발자에게 권한이 있음 -->
+      <button v-on:click="add2(10)">Add 10</button>
+      <button v-on:click="reduce2(5)">Remove 5</button>
+
+      <!-- v-once는 잘 쓰이지 않지만, 초기값을 고정시킬 때 사용 -->
+      <p v-once>Starting Counter: {{ counter }}</p>
+      <p>Result: {{ counter }}</p>
+      
+      <!-- v-on:input > 키를 입력할 때마다 실행되는 이벤트 리스너 -->
+      <!-- 이벤트가 발생할 때 실행될 함수를 가리키면,
+        그 함수가 자동으로 브라우저에서 인수를 하나 얻게 됨 -->
+      <!-- <input type="text" v-on:input="setName" style="text-align: center;"> -->
+      
+      <!-- setName()을 명시적으로 적어 다른 인수를 전달할 수도 있다. -->
+      <!-- $event는 Vue에서 제공하는 예약된 이름. 
+        브라우저를 통해 자동으로 얻는 기본 내장 이벤트 객체에 대한 액세스를 제공 -->
+      <!-- <input type="text" v-on:input="setName($event, 'Hello')" style="text-align: center;">
+      <p>Your Name: {{ name }}</p> -->
+
+      <!-- key 이벤트 적용 버전 -->
+      <input type="text" v-on:input="setName($event, 'Hello')" v-on:keyup.enter="confirmInput" style="text-align: center;">
+      <p>Your Name: {{ confirmedName }}</p>
+      
+      <!-- Vue가 관리하는 영역 내에 있지만, Sign Up 버튼을 클릭할 때마다 페이지가 새로고침됨
+        <form> 태그의 경우 브라우저 기본값이 양식을 제출하면서 서버에 HTTP 요청을 보내기 때문  -->
+      <!-- 그래서 Vue에서는 브라우저가 요청을 자동으로 전송하는 기본값을 방지하는 방법을 사용한다 
+        1. event.preventDefault(); 사용
+        2. 이벤트 수식어 : 수신하는 이벤트에 연결해서 이벤트 동작을 바꿀 수 있다
+        - ex. v-on:submit.prevent
+        - 종류 : .stop / .prevent / .capture / .self / .once / .passive -->
+      <!-- click 이벤트 수식어 : 마우스와 관련된 이벤트
+          - ex. v-on:click.right > 마우스의 오른쪽으로 버튼을 클릭했을 때 이벤트가 발생한다
+          - 종류 : .left(default 값이기 때문에 명시하지 않는다) / .right / .middle -->
+      <!-- key 이벤트 수식어 : 키보드와 관련된 이벤트 > enter 등 특정 키를 눌렀을 때 반응하도록 하는 등 -->
+
+      <!-- 브라우저 기본값 방지 방법2. 추천★ -->
+      <form v-on:submit.prevent="submitForm">
+        <input type="text">
+        <button>Sign Up</button>
+      </form>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <section id="assignment">
+      <!-- 1) Output your name -->
+      <!-- data에 내 이름 리턴시키기 -->
+      <h2>{{ name }}</h2>
+      <!-- 2) Output your age -->
+      <!-- data에 내 나이 리턴시키기 -->
+      <p>{{ Age }}</p>
+      <!-- 3) Output your age + 5 -->
+      <!-- methods에서 this.로 내 나이 받아와서 5 더해주기 -->
+      <p>YOUR AGE in 5 years : {{ agePlus() }}</p>
+      <!-- 4) Output a random number (0 to 1) -->
+      <!-- methods에서 random 함수 사용해서 출력하기 -->
+      <p>Favorite Number: {{ randomNum() }}</p>
+      <div>
+        <!-- 5) Display some image you found via Google -->
+        <!-- data에 링크 명시하고 v-bind 사용하기 -->
+        <img v-bind:src="imgUrl" style="width: 100px;"/>
+      </div>
+      <!-- 6) Prepopulate the input field with your name via the "value" attribute -->
+      <!-- 미리 입력하세요?? 여기서 이름을 받아서 위에다가 출력하면 될까??? -->
+      <!-- 위에 적은 이름을 input 창에 출력시키는 문제였음ㅋㅋㅋ -->
+      <!-- <input type="text" v-model="enteredValue" /> -->
+      <input type="text" v-bind:value="name" style="text-align: center;"/>
+    </section>
+  </body>
+</html>

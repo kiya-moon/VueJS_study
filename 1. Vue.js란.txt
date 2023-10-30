@@ -13,3 +13,10 @@
 - Vue를 사용해 페이지 내 모든 요소를 조정 > Single Page Application(SPA) 접근 방식
   서버는 오로지 HTML 페이지 하나만 전송
   페이지가 로드된 후 Vue 코드가 브라우저 내 화면에서 무엇을 렌더링할 지 정의한다
+
+
+3. Vue 사용방법
+Vue를 사용할 때는 제일 먼저 HTML코드에 Vue를 연결하는 일
+HTML 코드 중 어떤 부분을 Vue가 관리해야 하는 지를 명시해 Vue가 인식할 수 있도록 해준다
+Vue로 제어할 수 있는 부분에 대해서만 Vue를 사용할 수 있기 때문
+기본 코드 설명 gs-01-starting-project, basics-01-starting-code 참고
