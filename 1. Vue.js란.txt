@@ -1,0 +1,15 @@
+1. Vue.js란?
+
+- JavaScript framework
+- makes building interactive and reactive web frontends
+- easier
+- 컴포넌트 기반
+
+
+2. Vue의 활용방법
+- HTML 페이지의 일부분을 제어하거나 더욱 반응형 + 대화형으로 만들 때 사용
+  반응형 or 대화형이 아닌 곳까지 모두 Vue를 쓸 필요는 없다!
+
+- Vue를 사용해 페이지 내 모든 요소를 조정 > Single Page Application(SPA) 접근 방식
+  서버는 오로지 HTML 페이지 하나만 전송
+  페이지가 로드된 후 Vue 코드가 브라우저 내 화면에서 무엇을 렌더링할 지 정의한다

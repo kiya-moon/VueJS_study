@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A First App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <label for="goal">Goal</label>
+        <!-- v-model은 특수한 HTML 속성. 오로지 vue만 인식가능하며, vue.js의 프로퍼티와 연결하기 위해 사용 -->
+        <!-- 사용자가 입력한 내용을 자동으로 수신해서 이 input을 자동으로 업데이트 -->
+        <input type="text" id="goal" v-model="enteredValue"/>
+         <!--v-on:click 사용. 버튼을 클릭할 때마다 vue.js에 만든 addGoal 메서드를 실행한다  -->
+        <button v-on:click="addGoal">Add Goal</button>
+      </div>
+      <ul>
+        <!-- goals배열을 돌면서 goal에 접근 -->
+        <li v-for="goal in goals">{{ goal }}</li>
+      </ul>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
