@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Reactivity in Action</h1>
+    </header>
+    <section id="assignment">
+      <!-- 1) Connect the buttons and calculate a value (a number) -->
+      <!-- 버튼을 누르면 계산이 되도록 코딩 -->
+      <button @click="add(5)">Add 5</button>
+      <button @click="add(1)">Add 1</button>
+      <!-- Show "Not there yet" until you reach a result of exactly 37 -->
+      <!-- 37에 도달할 때까지 "Not there yet"이라고 RESULT에 보이게 만들기 -->
+      <!-- Show "Too much!" if the result is greater than 37 -->
+      <!-- 37을 넘어가면 "Too much!"라고 보이게 만들기" -->
+      <p>Result : {{ message }}</p>
+      <!-- 2) Watch for changes in "result" and reset the value to 0 after 5 seconds -->
+      <!-- result가 변경되면, 즉 'Too much!'가 되면 5초 후에 result 0으로 만들기 -->
+      <!-- 음... 0 : Not there yet 이렇게 보여야 하나?? -->
+    </section>
+  </body>
+</html>

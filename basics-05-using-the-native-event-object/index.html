@@ -21,8 +21,33 @@
       <button v-on:click="add(10)">Add 10</button>
       <button v-on:click="reduce(5)">Subtract 5</button>
       <p>Result: {{ counter }}</p>
-      <input type="text" v-on:input="setName($event, 'Schwarzmüller')">
-      <p>Your Name: {{ name }}</p>
+
+      <!-- 사용자가 입력한 값뿐만 아니라, 
+          입력 요소에 값을 설정하고 버튼이나 다른 로직으로 재설정할 수 있도록 만드는 경우 -->
+      <!-- 이를 구현하기 위해서 입력된 값을 value 프로퍼티에 바인딩해서 입력 요소에 전달-->
+      
+      <!-- name은 동적으로 바뀌는 요소이기 때문에 v-bind 사용 -->
+      <!-- <input type="text" v-bind:value="name" v-on:input="setName($event, 'Schwarzmüller')"> -->
+
+      <!-- 자주 사용되는 패턴이기 때문에 vue에서 축약어를 제공. 
+          패턴을 단순화한 특수 내장 디렉티브가 있음 -->
+      <!-- v-model 디렉티브 -->
+      <!-- v-model 디렉티브가 관리할 데이터 프로퍼티만 넣어주면 됨 -->
+      <input type="text" v-model="name">
+      <!-- => name 프로퍼티는 input 이벤트에서 값이 업데이트 되고 입력요소로 다시 전송된다 -->
+      <!-- v-model은 v-bind:value와 v-on:input의 역할을 모두 하는 축약어 -->
+      <!-- 양방향 바인딩
+          입력 요소에서 나오는 이벤트를 수신하는 동시에 value 속성 및 value 프로퍼티를 통해 값을 입력 요소에 다시 보냄
+          양방향으로 통신하기 때문에 양방향 바인딩이라고 한다 -->
+      <!-- 사용자 입력의 수신과 업데이트를 아주 쉽게 할 수 있게 해주고,
+          코드를 간결하게 만들어주어 매우 유용 -->
+     
+      <input type="text" v-model="lastName">    
+      <button v-on:click="resetInput">Reset Input</button>
+      <!-- <p>Your Name: {{ outputFullname() }}</p> -->
+      <!-- 호출 x !!! 데이터 프로퍼티를 사용하듯이 가리키기만 하면 Vue가 알아서 사용한다 -->
+      <!-- data로 가서 fullname이라는 데이터 프로퍼티가 있는지 체크한 후, 없다면 computed로 간다 -->
+      <p>Your Name: {{ fullname }}</p>
     </section>
   </body>
 </html>

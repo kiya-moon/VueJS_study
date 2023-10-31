@@ -19,4 +19,31 @@
 Vue를 사용할 때는 제일 먼저 HTML코드에 Vue를 연결하는 일
 HTML 코드 중 어떤 부분을 Vue가 관리해야 하는 지를 명시해 Vue가 인식할 수 있도록 해준다
 Vue로 제어할 수 있는 부분에 대해서만 Vue를 사용할 수 있기 때문
-기본 코드 설명 gs-01-starting-project, basics-01-starting-code 참고
+(기본 코드 설명 gs-01-starting-project, basics-01-starting-code 참고)
+
+
+4. Methods Vs Computed Vs Watch
+- Methods
+	Use with event binding or data binding
+	Data binding: Method is executed for every "re-render" cycle of the component
+	Use for events or data that really needs to be re-evaluated all the time
+
+- Computed
+	Use with data binding
+	Computed properties are only re-evaluated if one of their "used values" changed
+	Use for data that depends on other data
+
+- Watch
+	Not used directly in template
+	Allows you to run any code in reaction to some changed data (e.g. send Http request etc.)
+	Use for any non-data update you want to make
+
+
+5. 축약어
+- v-on:이벤트명 >>> @이벤트명
+  ex. v-on:click >>> @click
+
+- v-bind:이벤트명 >>> :이벤트명
+  ex. v-bind:vlaue >>> :value
+
+- 참고로 v-model은 축약어 없음
