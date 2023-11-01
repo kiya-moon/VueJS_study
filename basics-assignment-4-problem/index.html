@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Styling</h1>
+    </header>
+    <section id="assignment">
+      <!-- 1) Fetch the user input and use it as a CSS class -->
+      <!-- The entered class should be added to the below paragraph -->
+      <!-- input에 user1을 입력하면 Style me!에 user1 클래스 스타일을, user2를 입력하면 user2 클래스 스타일을 입히기 -->
+      <!-- (available classes: "user1", "user2") -->
+      <input type="text" @keyup="saveInput1"/>
+      <p :class="[userClasses, buttonClasses]">
+        Style me!
+      </p>
+      
+      <!-- 강사님 답안 -->
+      <!-- v-model을 사용하면 더 간단하게 문제를 해결할 수 있다 -->
+      <!-- input에 입력한 값을 따로 처리할 필요 없이 바로 가져다 사용! -->
+      <input type="text" v-model="userInput1"/>
+      <!-- <p :class="[userInput1, buttonClasses]"> -->
+      <p :class="paraClasses">
+        Style me!
+      </p>
+      
+
+      <!-- 2) Use the "visible" and "hidden" classes to show/ hide the above paragraph -->
+      <!-- Clicking the button should toggle between the two options -->
+      <!-- 버튼을 클릭하면 Style me!가 보였다가 안 보였다가 변경되어야 함 -->
+      <button @click="buttonClicked">Toggle Paragraph</button>
+
+      <!-- 3) Add dynamic inline styling to the below paragraph and let the user enter a background-color -->
+      <!-- input에 사용자가 입력하는 대로 Style me inline!의 배경색 변경하기 -->
+      <br />
+      <br />
+      <hr />
+      <br />
+      <!-- 여기도 v-on 대신에 v-model을 사용하면, 사용자가 입력한 텍스트를 바로 반영할 수 있다 -->
+      <input type="text" @keyup="saveInput2" />
+      <p :style="{'background-color': userInput2}">Style me inline!</p>
+    </section>
+  </body>
+</html>

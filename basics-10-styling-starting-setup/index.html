@@ -16,10 +16,44 @@
     <header>
       <h1>Vue Dynamic Styling</h1>
     </header>
+    <!-- 박스를 선택했을 때 강조 표시하도록 동적 스타일링 하기 -->
+    <!-- CSS나 CSS 클래스로 스타일을 설정할 수 있음.
+        혹은 인라인 스타일(Inline Style)을 적용해도 됨 -->
     <section id="styling">
-      <div class="demo"></div>
-      <div class="demo"></div>
-      <div class="demo"></div>
+      <!-- 인라인 스타일(Inline Style) 방법 -->
+      <!-- 동적 스타일링을 위해서 v-bind 사용하여 v-bind:style="{}" 객체 전달 가능 -->
+      <!-- 객체에는 CSS 프로퍼티명을 작성
+            - 대시(-) 사용을 위해 작은따옴표(')로 래핑하는 방법
+              ex. 'border-color'
+            - 카멜표기법을 사용하는 방법
+              ex. borderColor
+       -->
+       <!-- 하지만 html에서 인라인 스타일 사용 시 우선순위가 높아져 
+            다른 css를 무시하게 되는 문제가 똑같이 발생하므로 자주 사용하지 않는다 -->
+      <!-- <div class="demo" :style="{borderColor: boxASelected ? 'red' : '#ccc'}" @click="boxSelected('A')"></div> -->
+
+      <!-- CSS 클래스를 동적으로 바인딩하는 방법 -->
+      <!-- styles.css에 .active { border-color: red; } 추가 -->
+      <!-- boxBSelected가 true라면 CSS 클래스 demo와 active 스타일 적용 -->
+      <!-- 가독성도 떨어지는 편이고, 만약 동적으로 토글할 클래스가 더 많이 있으면 읽기 힘들어짐 -->
+      <!-- <div :class="boxASelected? 'demo active' : 'demo'" @click="boxSelected('A')"></div> -->
+
+      <!-- Vue.js가 지원하는 특별한 구문 사용 -->
+      <!-- demo style은 무조건 true로 적용시키고, active style은 boxASelected가 true일 때 적용한다 -->
+      <!-- 객체 안에 적는 클래스가 많아져도 가독성이 좋다는 장점이 있다 -->
+      <!-- <div :class="{demo: true, active: boxASelected}" @click="boxSelectecd('A')"></div> -->
+
+      <!-- 배열을 사용한 동적 스타일링도 가능 -->
+      <!-- <div :class="['demo' {active:boxAClasses}]" @click="boxSelected('A')"></div> -->
+
+      <!-- demo style은 무조건 true이기 때문에 바인딩하지 않고 조금 더 단순화 시킬 수 있음 -->
+      <!-- <div class="demo" :class="{active:boxASelected}" @click="boxSelected('A')"></div> -->
+
+      <!-- 위 로직을 HTML 외부에 코딩하고 싶다면 연산 프로퍼티를 사용하면 된다 -->
+      <div class="demo" :class="boxAClasses" @click="boxSelected('A')"></div>
+      <div class="demo" :class="boxBClasses" @click="boxSelected('B')"></div>
+      <div class="demo" :class="boxCClasses" @click="boxSelected('C')"></div>
+
     </section>
   </body>
 </html>
