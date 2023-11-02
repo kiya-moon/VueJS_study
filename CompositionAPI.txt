@@ -1,0 +1,31 @@
+옵션 api의 단점
+- Code that belongs together logically is split up across multiple options(data, methods, computed)
+  : 논리적으로 한 맥락의 코드가 여러 옵션으로 분할되어 있어, 
+    코드 수정을 위해서는 data, methods, computed 등의 옵션에서 모두 찾아 수정해야 한다
+- Re-using logic across components can be tricky or cumbersome
+   : 로직 재사용이 까다롭거나 번거로움
+
+컴포지션 api는 vue3가 되면서 쓸 수 있게 된 api
+기존에 옵션api에서 data() {}, methods: {}, computed: {}, 이런 식으로 나눠서 코딩을 했다면
+컴포지션 api에서는 setup() {} 안에 모든 것을 작성할 수 있음 
+
+option api
+{ 
+	data() {
+		return { name: 'Max' };
+	},
+	methods: {
+		doSmth() { ... }
+	}
+}
+
+composition api
+{
+	setup() {
+		const name = ref('Max');
+		function doSmth() { ... }
+		return { name, doSmth };
+	}
+}
+
+*** data, methods, computed, watch가 setup으로 바뀌는 것일뿐, 다른 옵션(프로퍼티, emits 옵션, 컴포넌트 등)은 바뀌지 않는다!!
