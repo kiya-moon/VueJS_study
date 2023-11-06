@@ -1,0 +1,23 @@
+Vue CLI
+
+Fixing npm run serve (Vue CLI)
+In the next lecture, we will use a third-party tool (Vue CLI) to create a new project. This tool, under the hood, uses NodeJS - a software which you need to download as part of the next lecture.
+
+You will learn about the details in the next lectures but in case you're getting any errors when trying to run Vue projects (via npm run serve, after creating them via the Vue CLI), try the following adjustment:
+
+Replace the scripts entry in your project's package.json before running npm run serve:
+
+Windows:
+
+"scripts": {  
+  "serve": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",  
+  "build": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",  
+  "lint": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
+},
+Mac and Linux:
+
+"scripts": {  
+  "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",  
+  "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",  
+  "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
+},

@@ -3,10 +3,10 @@
     <h1>Expense Tracker</h1>
   </header>
   <section>
-    <div>Available Funds: {{ invest.availableFunds }}</div>
-    <div>Total Expenses: {{ invest.currentExpenses }}</div>
+    <div>Available Funds: {{ availableFunds }}</div>
+    <div>Total Expenses: {{ currentExpenses }}</div>
     <hr />
-    <div>Funds left: {{ invest.remainingFunds }}</div>
+    <div>Funds left: {{ remainingFunds }}</div>
   </section>
   <section>
     <form @submit.prevent="addExpense">
@@ -20,29 +20,38 @@
 </template>
 
 <script>
-import { reactive, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 export default {
   setup() {
-    const invest = reactive({
-      availableFunds: 100,
-      currentExpenses: 0,
-      enteredExpense: 0,
-    });
+    // 고정 값이므로 반응형으로 만들 필요가 없다. ref 사용 x
+    const availableFunds = 100;
+
+    const currentExpenses = ref(0);
+    const enteredExpense = ref(0);
+
+    const remainingFunds = computed(function() {
+      // availableFunds는 일반 변수이므로 value를 사용하지 않는다
+      return availableFunds - currentExpenses.value;
+    })
 
     function addExpense() {
-      return invest.availableFunds - invest.currentExpenses;
+      currentExpenses.value += enteredExpense.value;
     }
 
-    const remainingFunds = computed(() => invest.availableFunds - invest.currentExpenses );
-
-    watch( remainingFunds, function() {
-      if (remainingFunds < 0) {
+    watch(remainingFunds, function(newValue) {
+      if (newValue < 0) {
         alert('You are broke!');
       }
     });
 
-    return { invest: invest, addExpense, remainingFunds };
+    return { 
+      availableFunds,
+      currentExpenses,
+      enteredExpense,
+      addExpense,
+      remainingFunds
+    };
   
   }
 
