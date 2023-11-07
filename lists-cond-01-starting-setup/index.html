@@ -17,12 +17,33 @@
       <h1>Vue Course Goals</h1>
     </header>
     <section id="user-goals">
+      <!-- v-for 심화 -->
       <h2>My course goals</h2>
-      <input type="text" />
-      <button>Add Goal</button>
-      <p>No goals have been added yet - please start adding some!</p>
-      <ul>
-        <li>Goal</li>
+      <input type="text" v-model="enteredGoalValue"/>
+      <button @click="addGoal">Add Goal</button>
+      <p v-if="goals.length === 0">No goals have been added yet - please start adding some!</p>
+      <ul v-else="goals.length > 0">
+        <!-- 
+          만약 목표를 입력하면 목표 출력과 함께 또 다른 input창이 띄워지도록 만들 때,
+          새로 만들어진 input 창을 클릭하면, 해당 클릭이벤트도 li 태그 내에서 발생하였기 때문에 input창과 함께 목표가 사라진다
+          이를 방지하기 위해서 input 태그에 @click.stop을 적어준다
+          input 창 클릭 시의 이벤트 발생만을 멈출 뿐 li 태그의 클릭 이벤트에는 영향을 주지 않는다
+          이벤트를 멈추는 것만이 목적이므로 실행해야 하는 다른 코드를 구체적으로 지정할 필요가 없다(@click.stop="sample" xxx)
+        -->
+        <li v-for="(goal, index) in goals" @click="removeGoal(index)">
+          <p>{{ goal }} - {{ index }}</p>
+          <input type="text" @click.stop>
+        </li> 
+        <!-- 
+          => 이 상태로 렌더링을 하고 테스트 시, 두 번째 목표 input에 적은 글이 첫 번째 목표 삭제 시에 사라져버리거나, 첫 번째 목표 input에 적은 글이 첫 번째 목표 삭제 시에 두 번째 목표 input 창에서 보이는 등의 버그가 발생한다
+
+          이는 목표를 삭제해도 Vue가 전체 목록을 다시 렌더링하지 않기 때문에 발생한다
+          첫 번째 목표를 삭제해도 첫 번째 목표의 DOM은 남아있고, 그 DOM으로 두 번째 목표의 동적 요소만 넘긴다. 즉, 코드의 이중 중괄호 속 부분만 첫 번째 DOM 요소로 옮겨가는 것
+          두 번째 목표에서 입력했던 input 값이 같이 넘겨지지 않기 때문에, 첫 번째 목표의 input 값(아무런 값도 입력되지 않은 상태) 그대로 빈칸으로 나온다
+
+          원인은 Vue가 요소를 재사용하기 때문
+          대부분의 경우 문제가 발생하지 않는다
+         -->
       </ul>
     </section>
   </body>

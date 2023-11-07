@@ -19,10 +19,9 @@
 </template>
 
 <script>
-import App_watch from '../../../../composition-01-starting-setup/src/App_watch.vue';
 import UserItem from './UserItem.vue';
 
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 export default {
   components: {
@@ -42,21 +41,17 @@ export default {
     // 동일 로직이 여러 곳에 흩어져 있지 않고 함께 작용하게 만들 수 있음
 
     // 3. 연산(computed) 프로퍼티 컴포지션 API로 변경하기
-    const availableUser = computed(function() {
+    const availableUsers = computed(function() {
       let users = [];
       if (activeSearchTerm.value) {
         users = props.users.filter((usr) =>
-          usr.fullName.includes(props.activeSearchTerm)
+          usr.fullName.includes(activeSearchTerm.value)
         );
       } else if (props.users) {
         users = props.users;
       }
       return users;
     })
-
-    function updateSearch(val) {
-      enteredSearchTerm.value = val;
-    };
 
     watch(enteredSearchTerm, function(newValue) {
       setTimeout(() => {
@@ -66,12 +61,17 @@ export default {
       }, 300);
     });
 
+    function updateSearch(val) {
+      enteredSearchTerm.value = val;
+    }
+
+
 
     // 정렬 기능
     const sorting = ref(null);
 
     const displayedUsers = computed(function() {
-      if (sorting.value) {
+      if (!sorting.value) {
         return availableUsers.value;
       }
       return availableUsers.value.slice().sort((u1, u2) => {
@@ -89,10 +89,16 @@ export default {
 
     function sort(mode) {
       sorting.value = mode;
-    };
+    }
 
-    return {}
-  },
+    return {
+      enteredSearchTerm,
+      updateSearch,
+      displayedUsers,
+      sorting,
+      sort
+    }
+  }
   // data() {
   //   return {
   //     enteredSearchTerm: '',
