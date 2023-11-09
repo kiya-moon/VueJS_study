@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Behind The Scenes</h1>
+    </header>
+    <!-- <section id="app"> ~ </section> : 첫 번째 Vue app의 템플릿 -->
+    <section id="app">
+      <h2>How Vue Works</h2>
+      <input type="text" @input="saveInput">
+      <button @click="setText">Set Text</button>
+      <p>{{ message }}</p>
+    </section>
+    <!-- <section id="app2"> ~ </section> : 두 번째 Vue app의 템플릿 -->
+    <!-- 지금까지는 하나의 앱만을 사용했었음. 여러 개의 앱을 사용하는 방법 -->
+    <section id="app2">
+      <!-- <p>{{ favoriteMeal }}</p> -->
+      
+      <!-- 먄약 app에 있는 data를 가져오려고 한다면? -->
+      <!-- DOSE NOT WORK : <p>{{ message }}</p> -->
+      <!-- => message는 두 번째 app의 data 프로퍼티가 아니기 때문에 아무것도 출력되지 않는다 -->
+      <!-- 두 앱 간에 연결고리가 없기 때문. 각각의 app은 개별적으로 존재한다 -->
+      <!-- 따라서 서로 독립적인 부분을 화면에서 출력하려 할 때 이를 제어하기 위해 여러 vUE 앱을 사용하고자 할 수는 있음 -->
+      <!-- 독립적이지 않고 서로 연결되어 움직여야 하는 부분인 경우(ex. input과 button),
+      해당하는 부분은 모두 동일한 Vue app으로 제어되어야 한다  -->
+    </section>
+  </body>
+</html>
