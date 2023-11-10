@@ -10,7 +10,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
-    <script src="app_ref.js" defer></script>
+    <script src="app_lifecycle.js" defer></script>
   </head>
   <body>
     <header>
@@ -18,10 +18,6 @@
     </header>
     <section id="app">
       <h2>How Vue Works</h2>
-      <!-- input을 통해 들어오는 값이 모두 필요할 때도 있지만, 전부 알 필요가 없을 때도 있다
-           Vue에는 필요할 때만 DOM 요소로부터 값을 가지고 오는 기능이 있음
-           이 기능을 ref라고 부른다 -->
-      <!-- ref는 기본 HTML 요소는 아님 -->
       <input type="text" ref="userText">
       <button @click="setText">Set Text</button>
       <p>{{ message }}</p>

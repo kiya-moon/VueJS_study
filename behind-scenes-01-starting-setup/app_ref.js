@@ -10,7 +10,10 @@ const app = Vue.createApp({
       this.currentUserInput = event.target.value;
     },
     setText() {
-      this.message = this.currentUserInput;
+      // this.message = this.currentUserInput;
+
+      // Vue가 지원하는 모든 프로퍼티는 $로 시작한다
+      this.message = this.$refs.userText.value;
     },
   },
 });
