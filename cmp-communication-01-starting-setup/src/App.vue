@@ -1,30 +1,31 @@
 <!-- 부모 컴포넌트 -->
+
+<!-- v-for 적용해보기 -->
+<!-- script에 만들어둔 data를 가지고 와서 <friend-contact>에 v-for로 넣어줄 수 있다 -->
 <template>
   <section>
     <header>
       <h1>My Friends</h1>
     </header>
     <ul>
-      <!-- FriendContact 컴포넌트를 사용하고 있는 부분 -->
-      <!-- 첫 번째는 Manuel 정보를, 두 번째는 Julie 정보를 전달하고자 함 -->
-      <!-- 같은 컴포넌트를 여러 번 사용할 때 매번 다른 데이터로 설정한다는 개념은 핵심적인 개념이고, Vue에서는 이를 프롭스(props)라는 개념으로 사용할 수 있다  -->
-      <!-- 프롭스(props)는 프로퍼티(property)의 줄임말로, 일종의 커스텀 HTML 속성 -->
-      <!-- HTML 단에서 이름을 쓸 때는 kebob-case 사용 -->
       <friend-contact
-        name="Manuel Lorenz"
-        phone-number="0123 45678 90"
-        email-address="manuel@localhost.com"
-        is-favorite="1"
-      ></friend-contact>
-      <friend-contact
-        name="Julie Jones"
-        phone-number="0987 654421 21"
-        email-address="julie@localhost.com"
-        is-favorite="0"
+        v-for="friend in friends"
+        :key="friend.id"
+        :id="friend.id"
+        :name="friend.name"
+        :phone-number="friend.phone"
+        :email-address="friend.email"
+        :is-favorite="friend.isFavorite"
+        @toggle-favorite="toggleFavoriteStatus"
       ></friend-contact>
     </ul>
   </section>
 </template>
+<!-- :is-favorite="true" >>> 전부 true로 출력되므로 :is-favorite="friend.isFavorite"로 변경하여
+     friend 객체의 isFavorite 프로퍼티를 가진다 -->
+
+<!-- 자식에서 emit()으로 전달하는 커스텀이벤트는, 부모에서 v-on으로 수신받으면 된다 -->
+<!-- @커스텀이벤트명="이벤트가 발생했을 때 실행되어야 할 JavaScript 코드" -->
 
 <script>
 export default {
@@ -36,16 +37,34 @@ export default {
           name: "Manuel Lorenz",
           phone: "0123 45678 90",
           email: "manuel@localhost.com",
+          isFavorite: true
         },
         {
           id: "julie",
           name: "Julie Jones",
           phone: "0987 654421 21",
           email: "julie@localhost.com",
+          isFavorite: false
         },
-      ],
+      ],  // 하지만 이 상태에서는 'Toggle Favorite' 버튼을 눌렀을 때 자식 컴포넌트 내부에서만 값이 바뀔 뿐
+          // friends 데이터에서는 변경되지 않는다.
+          // 이게 만약 데이터베이스에서 받은 값이라면 데이터베이스로 돌려보내기도 해야한다
+          // 즉, 컴포넌트 내부에서만 바뀌는 건 의미가 없음
+          // props를 부모에서 자식으로 전달했다면, 자식에서 부모로 'Toggle Favorite' 상태 변경 값을 전달해야한다
+          
+          // How?
+          // 일반 HTML 코드에서는 버튼 클릭 시 우리가 수신할 수 있는 클릭 이벤트를 발생시켜서 알린다
+          // 컴포넌트가 부모에게 무언가 일어났음을 알리고자 한다면, 컴포넌트는 부모가 수신할 이벤트를 발생시켜야 한다
     };
   },
+  methods: {
+    // FriendContact.vue에서 전달한 this.id는 toggleFavortieStauts의 첫번째 인수로 들어온다
+    // 인수명은 개발자 자유
+    toggleFavoriteStatus(friendId) {
+      const identifiedFriend = this.friends.find(friend => friend.id === friendId);
+      identifiedFriend.isFavorite = !identifiedFriend.isFavorite;
+    }
+  }
 };
 </script>
 
