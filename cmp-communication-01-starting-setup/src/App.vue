@@ -1,12 +1,12 @@
 <!-- 부모 컴포넌트 -->
-
-<!-- v-for 적용해보기 -->
-<!-- script에 만들어둔 data를 가지고 와서 <friend-contact>에 v-for로 넣어줄 수 있다 -->
 <template>
   <section>
     <header>
       <h1>My Friends</h1>
     </header>
+    <!-- NewFriend.vue에서 데이터를 수신받기 위해 연결해준다 > @add-contact -->
+    <!-- addContact > 여기서 정의해야 하는 메서드. 이벤트에 썼던 이름과 똑같게 할 필요는 없다. 개발자 마음대로 -->
+    <new-friend @add-contact="addContact"></new-friend>
     <ul>
       <friend-contact
         v-for="friend in friends"
@@ -17,15 +17,11 @@
         :email-address="friend.email"
         :is-favorite="friend.isFavorite"
         @toggle-favorite="toggleFavoriteStatus"
+        @delete="deleteContact"
       ></friend-contact>
     </ul>
   </section>
 </template>
-<!-- :is-favorite="true" >>> 전부 true로 출력되므로 :is-favorite="friend.isFavorite"로 변경하여
-     friend 객체의 isFavorite 프로퍼티를 가진다 -->
-
-<!-- 자식에서 emit()으로 전달하는 커스텀이벤트는, 부모에서 v-on으로 수신받으면 된다 -->
-<!-- @커스텀이벤트명="이벤트가 발생했을 때 실행되어야 할 JavaScript 코드" -->
 
 <script>
 export default {
@@ -46,23 +42,37 @@ export default {
           email: "julie@localhost.com",
           isFavorite: false
         },
-      ],  // 하지만 이 상태에서는 'Toggle Favorite' 버튼을 눌렀을 때 자식 컴포넌트 내부에서만 값이 바뀔 뿐
-          // friends 데이터에서는 변경되지 않는다.
-          // 이게 만약 데이터베이스에서 받은 값이라면 데이터베이스로 돌려보내기도 해야한다
-          // 즉, 컴포넌트 내부에서만 바뀌는 건 의미가 없음
-          // props를 부모에서 자식으로 전달했다면, 자식에서 부모로 'Toggle Favorite' 상태 변경 값을 전달해야한다
-          
-          // How?
-          // 일반 HTML 코드에서는 버튼 클릭 시 우리가 수신할 수 있는 클릭 이벤트를 발생시켜서 알린다
-          // 컴포넌트가 부모에게 무언가 일어났음을 알리고자 한다면, 컴포넌트는 부모가 수신할 이벤트를 발생시켜야 한다
+      ], 
     };
   },
   methods: {
-    // FriendContact.vue에서 전달한 this.id는 toggleFavortieStauts의 첫번째 인수로 들어온다
-    // 인수명은 개발자 자유
     toggleFavoriteStatus(friendId) {
       const identifiedFriend = this.friends.find(friend => friend.id === friendId);
       identifiedFriend.isFavorite = !identifiedFriend.isFavorite;
+    },
+
+    // 위에서 정의한 addConcat()
+    // 이름, 전화번호, 이메일 주소 총 세 개의 데이터를 받아야 한다
+    // 매개변수의 이름은 개발자 마음이지만 순서는 변경x. 이벤트를 발생시킬 때 정한 순서와 같아야 한다!!
+    addContact(name, phone, email){
+      const newFriendContact = {
+        // 왼: 프로퍼티 이름 / 우: 인수 이름
+        // 여기서 프로퍼티 이름과 인수 이름이 같은 것은 우연
+        // 프로퍼티 이름은 더미 객체에 있었던 것과 같아야 한다
+        id: new Date().toISOString(), // 가상 고유 id > JavaScript에서 얻을 수 있는 현재 날짜를 예시로 사용
+        name: name,
+        phone: phone,
+        email: email,
+        isFavorite: false
+      };
+      this.friends.push(newFriendContact); // this.friends를 통해 App.vue의 Config 객체에 있는 friends 데이터 프로퍼티에 접근하여 newFriendContact를 푸쉬해준다
+    },
+    deleteContact(friendId) {
+      this.friends = this.friends.filter(friend => friend.id !== friendId); // filter : JavaScript 내장 메서드
+                                                                            // 호출하는 배열에 기반한 새 배열을 반환한다
+                                                                            // 따라서 filter에는 함수를 인수로 제공해야 한다
+                                                                            // 함수가 참을 반환하면 요소가 유지되고, 거짓을 반환하면 요소가 없어진다
+                                                                            // 요소 내 friend의 id가 friendId와 같으면 거짓을 반환(friends에서 삭제해야 하니까)
     }
   }
 };
@@ -94,7 +104,8 @@ header {
   padding: 0;
   list-style: none;
 }
-#app li {
+#app li,
+#app form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1rem auto;
   border-radius: 10px;
@@ -123,5 +134,18 @@ header {
   background-color: #ec3169;
   border-color: #ec3169;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+}
+#app input {
+  font: inherit;
+  padding: 0.15rem;
+}
+#app label {
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 7rem;
+  display: inline-block;
+}
+#app form div {
+  margin: 1rem 0;
 }
 </style>
