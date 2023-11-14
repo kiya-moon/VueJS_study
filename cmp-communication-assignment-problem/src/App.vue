@@ -21,7 +21,8 @@ export default {
     return {
       user: {
         name: 'kiyeon',
-        age: 30
+        // age의 타입이 Number일 경우
+        age: +30
       }
     }
   },

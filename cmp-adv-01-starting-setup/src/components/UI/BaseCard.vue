@@ -27,6 +27,10 @@
              만약 BadgeList.vue에 v-slot:header 템플릿을 주석처리하면,
              header slot에 제공되는 콘텐츠가 없기 때문에 The Default를 확인할 수 있다 -->
         <h2>The Default</h2>
+
+        <!-- 만약 기본 콘텐츠가 지정되어 있지 않고 header slot에 제공되는 콘텐츠도 없다면,
+             개발자도구에서 Elements 확인 시 빈 header 요소를 볼 수 있다 -->
+        <!-- 하지만 DOM에 빈 HTML 요소가 있는 것은 바람직하지 않음 -->
       </slot>
     </header>
     <!-- 만약 이름 없는 슬롯을 하나 남겨두면 그것이 기본 슬롯이 된다
@@ -37,7 +41,13 @@
 
 <script>
 export default {
-  props: ['content']
+  mounted() {
+    // $slot
+    // Vue에서 제공하는 내장 프로퍼티
+    // 컴포넌트가 다른 슬롯에 대해 수신하는 슬롯 데이터에 관한 정보를 보유
+    // this.$slots.header, this.$slots.default 이런 식으로 존재하고 있는 슬롯에 엑세스 할 수 있다
+    console.log(this.$slots);
+  } // BaseCard 컴포넌트는 UserInfo.vue, Badgelist.vue에서 각각 사용하므로 mount는 두 번 호출된다
 }
 </script>
 

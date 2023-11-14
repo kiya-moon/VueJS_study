@@ -1,7 +1,8 @@
 <template>
   <section>
     <base-card>
-      <template v-slot:header>
+      <!-- v-slot의 축약어 : # -->
+      <template #header>
         <h2>Available Badges</h2>
       </template>
       <!-- 남아있는 콘텐츠는 자동으로 기본 슬롯으로 이동하지만, 
