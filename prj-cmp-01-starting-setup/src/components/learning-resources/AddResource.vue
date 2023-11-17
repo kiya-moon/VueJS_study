@@ -6,7 +6,9 @@
   <!-- 6-11. 양식을 base-card로 래핑해서 카드 형식으로 제작 -->
   <base-card>
     <!-- 7. 사용자에게서 입력받은 데이터 가져오기   -->
-    <form>
+    <!-- 7-5. form이 제출되었을 때 submitData() 메서드가 트리거되도록 form 태그에 submit 리스너를 추가한다
+              또한 브라우저 기본동작을 막기 위해 prevent 식별자를 사용한다  -->
+    <form @submit.prevent="submitData">
       <div class="form-control">
         <label for="title">Title</label>
         <input id="title" name="title" type="text" ref="titleInput" >
@@ -31,6 +33,7 @@
 
 <script>
 export default {
+  inject: ['addResource'],
   // 7-1. 양식이 제출되었을 때 트리거 될 메서드 작성
   // textarea와 input에 입력된 값을 가지고 오는 방법은 크게 두 가지
   // 1) data 프로퍼티를 통해 v-model과 입력 리스너로 모든 키 입력에 업데이트를 실행
@@ -40,6 +43,16 @@ export default {
       const enteredTitle = this.$refs.titleInput.value;
       const enteredDescription = this.$refs.descInput.value;
       const enteredUrl = this.$refs.linkInput.value;
+      
+      // 8. AddResource 컴포넌트에서 사용자에게 빈테이터는 제출할 수 없다고 알려주는 방법
+      // 8-1. trim을 사용하여 사용자가 입력한 값의 처음과 끝에서 공백을 없에 공백을 유효한 값으로 인식하지 않게 하고,
+      //      enteredTitle, enteredDescription, enteredUrl 어느 쪽이든 빈값일 때는 그 결과를 반환해 addResource가 실행되지 않도록 한다 
+      if (enteredTitle.trim() === '' || enteredDescription.trim() === '' || enteredUrl.trim() === '') {
+        return;
+      }
+
+      // 7-4. addResource 메서드를 inject 키로 가져왔으므로 submitData에서도 addResource 메서드를 호출할 수 있다
+      this.addResource(enteredTitle, enteredDescription, enteredUrl);
     }
   }
 }

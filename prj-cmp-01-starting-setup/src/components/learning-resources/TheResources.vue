@@ -21,8 +21,11 @@
       >Add Resource</base-button
     >
   </base-card>
+  <!-- 7-6. 탭을 전환해도 addResource 컴포넌트에서 입력중이던 데이터가 사리지지 않도록 keep-alive 추가 -->
   <!-- 6-4. 페이지 전환은 동적 컴포넌트 기능을 사용하여 구현 -->
-  <component :is="selectedTab"></component>
+  <keep-alive>
+    <component :is="selectedTab"></component>
+  </keep-alive>
 </template>
 
 <script>
@@ -67,6 +70,7 @@ export default {
       this.selectedTab = tab;
     },
     // 7-2. AddResource 컴포넌트에서 입력받은 데이터를 storedResources배열에 추가하는 메서드 작성
+    //      selectedTab 값을 'stored-resources'로 지정해서 리소스를 추가할 때 탭이 바뀌도록 한다
     addResource(title, description, url) {
       const newResource = {
         id: new Date().toISOString(),
@@ -75,12 +79,15 @@ export default {
         link: url
       };
       this.storedResources.unshift(newResource);
+      this.selectedTab = 'stored-resources';
     } 
   },
   // 6-7. provide 키를 메서드 형태로 추가하고 data 프로퍼티에 추가한 StoredResources를 포인터로 가리킨 resources를 반환. 이렇게 하면 resources가 모든 자식 컴포넌트 및 손자 컴포넌트에까지 제공된다
   provide() {
     return {
       resources: this.storedResources,
+      // 7-3. AddResource.vue의 submitData에서도 TheResources.vue에 추가한 addResource 메서드를 추가하기 위해 provide에 추가해준다
+      addResource: this.addResource
     };
   },
 };
