@@ -80,14 +80,23 @@ export default {
       };
       this.storedResources.unshift(newResource);
       this.selectedTab = 'stored-resources';
-    } 
+    },
+
+    // 9-1. removeResource 메서드 추가
+    removeResource(resId) {
+      const resIndex = this.storedResources.findIndex(res => res.id === resId);
+      this.storedResources.splice(resIndex, 1);
+    },
+
   },
   // 6-7. provide 키를 메서드 형태로 추가하고 data 프로퍼티에 추가한 StoredResources를 포인터로 가리킨 resources를 반환. 이렇게 하면 resources가 모든 자식 컴포넌트 및 손자 컴포넌트에까지 제공된다
   provide() {
     return {
       resources: this.storedResources,
       // 7-3. AddResource.vue의 submitData에서도 TheResources.vue에 추가한 addResource 메서드를 추가하기 위해 provide에 추가해준다
-      addResource: this.addResource
+      addResource: this.addResource,
+      // 9-2. LearningResource.vue에 deleteResource를 삽입하기 위해 provide에 추가
+      deleteResource: this.removeResource
     };
   },
 };

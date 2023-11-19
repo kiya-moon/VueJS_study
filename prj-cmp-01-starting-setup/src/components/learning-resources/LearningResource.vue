@@ -11,7 +11,13 @@
         <h3>{{ title }}</h3>
         <!-- 5-5. BaseButton 적용 -->
         <!-- 5-6. 디자인이 어울리지 않아 mode 프로퍼티 추가 후 flat으로 설정 -->
-        <base-button mode="flat">Delete</base-button>
+
+        <!-- 9. 리소스 삭제 기능 추가하기 -->
+        <!-- 동적 컴포넌트를 사용하고 있기 때문에 커스텀 이벤트를 사용해서 삭제 기능을 만들 수 없다
+             대신, 리소스 추가를 처리할 때 사용한 방식(TheResources.vue - addResource() 추가)을 사용 -->
+        <!-- 9-3. 사용자가 Delete 버튼을 클릭했을 때, 클릭 리스너를 통해 삽입한 deleteResource 메서드를 가리키도록 한다
+                  또한 실행을 위해 해당 리소스의 id를 프로퍼티로 가져와 deleteResource 메서드에 입력해준다 -->
+        <base-button mode="flat" @click="deleteResource(id)">Delete</base-button>
       </header>
       <p>{{ description }}</p>
       <nav>
@@ -25,7 +31,8 @@
 export default {
   //  1-6. props를 추가하여 이 컴포넌트에 입력하려는 프로퍼티가 무엇인지 Vue에 알려준다
   //  하드코딩을 하면 컴포넌트를 재사용할 수 없지만, 이 방법을 사용하면 재사용이 가능하다
-  props: ['title', 'description', 'link']
+  props: ['id', 'title', 'description', 'link'],
+  inject: ['deleteResource']
 }
 </script>
 

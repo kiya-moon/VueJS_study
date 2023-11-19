@@ -1,9 +1,11 @@
 <template>
   <ul>
     <!-- 2-1. v-for에 필요한 storedResources 사용을 위해 props를 추가하고 그 이름에 맞게 변경해준다 -->
+    <!-- 9-4. LearningResource에 id 프로퍼티를 추가했으므로 StoredResources.vue에도 id를 추가해준다 -->
     <learning-resource
       v-for="res in resources"
       :key="res.id"
+      :id="res.id"
       :title="res.title"
       :description="res.description"
       :link="res.link"
