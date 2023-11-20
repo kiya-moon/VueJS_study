@@ -28,7 +28,6 @@
               HTTP 요청을 보낼 수 있는 브라우저 내장 메서드
               URL을 첫 번째 인수로 취한 다음 URL에서 데이터를 가져오도록 구성하거나 해당 URL로 데이터를 보낼 수 있음 
       -->
-      <!-- 여기서는 fetch 사용 -->
       <form @submit.prevent="submitSurvey">
         <div class="form-control">
           <label for="name">Your Name</label>
@@ -41,11 +40,11 @@
         </div>
         <div class="form-control">
           <input
-            type="radio"
-            id="rating-average"
-            value="average"
-            name="rating"
-            v-model="chosenRating"
+          type="radio"
+          id="rating-average"
+          value="average"
+          name="rating"
+          v-model="chosenRating"
           />
           <label for="rating-average">Average</label>
         </div>
@@ -54,7 +53,7 @@
           <label for="rating-great">Great</label>
         </div>
         <p
-          v-if="invalidInput"
+        v-if="invalidInput"
         >One or more input fields are invalid. Please check your provided data.</p>
         <div>
           <base-button>Submit</base-button>
@@ -73,7 +72,7 @@ export default {
       invalidInput: false,
     };
   },
-  emits: ['survey-submit'],
+  // emits: ['survey-submit'],
   methods: {
     // submit 메서드
     submitSurvey() {
@@ -85,22 +84,24 @@ export default {
       }
       this.invalidInput = false;
 
-      // 입력값이 유효하다면 survey-submit 이벤트가 발생된다
-      this.$emit('survey-submit', {
-        userName: this.enteredName,
-        rating: this.chosenRating,
-      });
-
+      // 아래에서 Firebase에 HTTP 요청을 보내므로 더 이상 이벤트를 발생시킬 필요가 없다 > 관련된 것 모두 주석처리
+      // // 입력값이 유효하다면 survey-submit 이벤트가 발생된다
+      // this.$emit('survey-submit', {
+      //   userName: this.enteredName,
+      //   rating: this.chosenRating,
+      // });
+      
       // 위에서 언급했듯이 fetch의 첫번째 인수로는 url이 들어오는데, 약간의 수정이 필요하다
       // https://vue-http-demo-87bc4-default-rtdb.firebaseio.com/ < 슬래시 뒤에 원하는 식별자를 추가할 수 있는데, 
       // 단어.json의 형태로 식별자를 추가해야 한다
       // 이러한 형태의 식별자는 firebase에서 요구하는 형태일뿐, Vue 또는 백엔드에서 요구하는 것이 아님
       // .json 앞의 단어는 키로, 해당 키로 firebase가 자동으로 데이터베이스에 노트를 생성하고 해당 노트에 데이터를 저장한다
-
+      
+      // < fetch() 사용 >
       // 기본적으로 fetch는 데이터를 가져오지만, 여기서는 데이터를 보내야하기 때문에 두 번째 인수를 추가한다
       // 두 번째 인수는 JavaScript 객체 형태로 데이터 요청에 대한 구성을 명시한다
       fetch('https://vue-http-demo-87bc4-default-rtdb.firebaseio.com/surveys.json', {
-
+        
         // method에는 POST, GET, DELETE, PATCH 등이 올 수 있다
         method: 'POST',
 
